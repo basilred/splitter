@@ -1,0 +1,250 @@
+.page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #151515 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.page::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+  z-index: 0;
+}
+
+.page__container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 500px;
+  background: rgba(30, 30, 30, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.page__header {
+  padding: 32px 32px 24px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.page__title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0 0 8px 0;
+  background: linear-gradient(90deg, #ffffff, #a5b4fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.page__subtitle {
+  font-size: 1rem;
+  color: #aaa;
+  margin: 0;
+}
+
+.page__card {
+  padding: 32px;
+}
+
+.page__amount {
+  text-align: center;
+  margin-bottom: 32px;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.page__amountLabel {
+  display: block;
+  font-size: 0.95rem;
+  color: #aaa;
+  margin-bottom: 8px;
+}
+
+.page__amountValue {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.page__details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.page__detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+}
+
+.page__detailLabel {
+  font-size: 0.95rem;
+  color: #aaa;
+}
+
+.page__detailValue {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.page__detailValue--pending {
+  color: #fbbf24;
+}
+
+.page__detailValue--processing {
+  color: #3b82f6;
+}
+
+.page__detailValue--success {
+  color: #4ade80;
+}
+
+.page__detailValue--failed {
+  color: #ef4444;
+}
+
+.page__payButton {
+  width: 100%;
+  padding: 22px;
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+}
+
+.page__payButton:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(59, 130, 246, 0.6);
+}
+
+.page__processing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  gap: 20px;
+}
+
+.page__spinner {
+  animation: spin 1.5s linear infinite;
+  color: #3b82f6;
+  width: 48px;
+  height: 48px;
+}
+
+.page__success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  gap: 20px;
+  text-align: center;
+}
+
+.page__success h2 {
+  font-size: 1.8rem;
+  color: #4ade80;
+  margin: 0;
+}
+
+.page__success p {
+  color: #aaa;
+  margin: 0;
+}
+
+.page__backButton {
+  margin-top: 20px;
+  padding: 14px 28px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.page__backButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.page__security {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 32px;
+  padding: 16px;
+  background: rgba(34, 197, 94, 0.1);
+  border-radius: 12px;
+  color: #4ade80;
+  font-size: 0.9rem;
+}
+
+.page__footer {
+  padding: 24px;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.page__footerText {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 12px;
+  }
+  .page__container {
+    border-radius: 20px;
+  }
+  .page__header,
+  .page__card {
+    padding: 24px;
+  }
+  .page__amountValue {
+    font-size: 2.8rem;
+  }
+}
