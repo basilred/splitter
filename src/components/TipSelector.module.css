@@ -1,0 +1,135 @@
+.selector {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.selector__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.selector__title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+  color: #fff;
+}
+
+.selector__hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.1);
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+.selector__presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.selector__preset {
+  flex: 1;
+  min-width: 80px;
+  padding: 16px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.selector__preset:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.selector__preset--active {
+  background: rgba(74, 222, 128, 0.2);
+  border-color: #4ade80;
+  color: #4ade80;
+  box-shadow: 0 4px 16px rgba(74, 222, 128, 0.3);
+}
+
+.selector__custom {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.selector__customLabel {
+  font-size: 1rem;
+  color: #aaa;
+}
+
+.selector__customInputWrapper {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  padding: 0 16px;
+}
+
+.selector__customInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 18px 0;
+  font-family: 'JetBrains Mono', monospace;
+  outline: none;
+  width: 100%;
+}
+
+.selector__customInput::-webkit-outer-spin-button,
+.selector__customInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.selector__customSuffix {
+  font-size: 1.5rem;
+  color: #aaa;
+  margin-left: 8px;
+}
+
+.selector__info {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.selector__infoText {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #888;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .selector__preset {
+    min-width: 70px;
+    padding: 14px 10px;
+    font-size: 1.1rem;
+  }
+  .selector__customInput {
+    font-size: 1.3rem;
+    padding: 16px 0;
+  }
+}

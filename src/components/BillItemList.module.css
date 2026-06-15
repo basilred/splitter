@@ -1,0 +1,185 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.list__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  color: #888;
+  text-align: center;
+}
+
+.list__items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.list__item {
+  display: flex;
+  align-items: center;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.list__item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.list__item--selected {
+  background: rgba(74, 222, 128, 0.1);
+  border-color: rgba(74, 222, 128, 0.4);
+}
+
+.list__item--selected::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #4ade80;
+  border-radius: 4px 0 0 4px;
+}
+
+.list__itemCheckbox {
+  flex-shrink: 0;
+  margin-right: 16px;
+}
+
+.list__checkbox {
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.list__item--selected .list__checkbox {
+  background: #4ade80;
+  border-color: #4ade80;
+  color: #000;
+}
+
+.list__itemContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.list__itemName {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 6px 0;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list__itemMeta {
+  display: flex;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.list__itemQuantity {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.list__itemStatus {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.list__item--selected .list__itemStatus {
+  background: rgba(74, 222, 128, 0.2);
+  color: #4ade80;
+}
+
+.list__itemPrice {
+  flex-shrink: 0;
+  margin-left: 16px;
+  text-align: right;
+}
+
+.list__itemTotal {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.list__item--selected .list__itemTotal {
+  color: #4ade80;
+}
+
+.list__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.list__selectedCount {
+  font-size: 0.95rem;
+  color: #aaa;
+  margin: 0;
+}
+
+.list__selectAll {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.list__selectAll:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 480px) {
+  .list__item {
+    padding: 14px;
+    flex-wrap: wrap;
+  }
+  .list__itemPrice {
+    margin-left: auto;
+    margin-top: 8px;
+    width: 100%;
+    text-align: left;
+  }
+}

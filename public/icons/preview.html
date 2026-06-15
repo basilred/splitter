@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Превью иконки для Telegram-бота</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            color: #1f2937;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            padding: 3rem;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #4F46E5;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: #6b7280;
+            margin-bottom: 3rem;
+        }
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            background: #f9fafb;
+            border-radius: 16px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .icon-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(79, 70, 229, 0.15);
+        }
+        .icon-item h3 {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            color: #374151;
+        }
+        .icon-item p {
+            margin-top: 0.5rem;
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+        .icon-svg {
+            width: 128px;
+            height: 128px;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.1));
+        }
+        .colors {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .color-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .usage {
+            text-align: left;
+            background: #f3f4f6;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-top: 3rem;
+        }
+        .usage h2 {
+            color: #4F46E5;
+            margin-bottom: 1rem;
+        }
+        code {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            display: block;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        .footer {
+            margin-top: 3rem;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Иконка для Telegram-бота</h1>
+        <p class="subtitle">Разделение счёта • Элегантный дизайн • Готово к использованию</p>
+
+        <div class="icon-grid">
+            <div class="icon-item">
+                <img src="split-bill-icon.svg" alt="Иконка" class="icon-svg">
+                <h3>Основная иконка (128×128)</h3>
+                <p>SVG с градиентами и тенями</p>
+            </div>
+            <div class="icon-item">
+                <div style="width: 128px; height: 128px; background: url('split-bill-icon.svg') center/contain no-repeat; filter: grayscale(0.5);"></div>
+                <h3>Чёрно-белый вариант</h3>
+                <p>Для печати или монохромных тем</p>
+            </div>
+        </div>
+
+        <h2>Цветовая палитра</h2>
+        <div class="colors">
+            <div class="color-box" style="background: #4F46E5;" title="Основной индиго"></div>
+            <div class="color-box" style="background: #7C3AED;" title="Фиолетовый акцент"></div>
+            <div class="color-box" style="background: #10B981;" title="Зелёный успех"></div>
+            <div class="color-box" style="background: #F59E0B;" title="Жёлтый предупреждение"></div>
+            <div class="color-box" style="background: #1F2937;" title="Тёмный фон"></div>
+        </div>
+
+        <div class="usage">
+            <h2>Использование в проекте</h2>
+            <p>Иконка расположена в <strong>public/icons/split-bill-icon.svg</strong>. Вы можете использовать её как:</p>
+            <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                <li>Иконка бота в Telegram</li>
+                <li>Favicon веб-интерфейса</li>
+                <li>Логотип в заголовке страницы</li>
+                <li>Графический элемент в UI</li>
+            </ul>
+            <p>Пример вставки в React-компонент:</p>
+            <code>
+                import SplitBillIcon from '/icons/split-bill-icon.svg';<br>
+                <br>
+                function AppIcon() {<br>
+                &nbsp;&nbsp;return <img src={SplitBillIcon} alt="Split Bill" width="64" height="64" />;<br>
+                }
+            </code>
+            <p>Или как фондовое изображение в CSS:</p>
+            <code>
+                .bot-icon {<br>
+                &nbsp;&nbsp;background: url('/icons/split-bill-icon.svg') center/contain no-repeat;<br>
+                &nbsp;&nbsp;width: 48px;<br>
+                &nbsp;&nbsp;height: 48px;<br>
+                }
+            </code>
+        </div>
+
+        <div class="footer">
+            <p>Иконка создана для проекта Telegram-бота разделения счёта. Формат: SVG, размеры: 128×128 пикселей.</p>
+            <p>Рекомендуется использовать с тёмным или светлым фоном для лучшей контрастности.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,139 @@
+.display {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background: rgba(30, 30, 30, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.display__header {
+  text-align: center;
+}
+
+.display__title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 0 0 8px 0;
+  color: #fff;
+}
+
+.display__subtitle {
+  font-size: 1rem;
+  color: #aaa;
+  margin: 0;
+}
+
+.display__code {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.display__canvas {
+  padding: 24px;
+  background: #fff;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+.display__info {
+  text-align: center;
+  width: 100%;
+}
+
+.display__label {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 8px 0;
+}
+
+.display__url {
+  font-size: 0.9rem;
+  color: #888;
+  word-break: break-all;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 12px;
+  border-radius: 12px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.display__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.display__button {
+  flex: 1;
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.display__button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.display__button--copied {
+  background: rgba(74, 222, 128, 0.2);
+  border-color: #4ade80;
+  color: #4ade80;
+}
+
+.display__instructions {
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.display__instructionsTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 16px 0;
+}
+
+.display__instructionsList {
+  margin: 0;
+  padding-left: 20px;
+  color: #aaa;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.display__instructionsList li {
+  line-height: 1.5;
+}
+
+@media (max-width: 480px) {
+  .display {
+    padding: 24px;
+  }
+  .display__actions {
+    flex-direction: column;
+  }
+  .display__button {
+    min-width: 100%;
+  }
+}
