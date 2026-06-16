@@ -29,6 +29,31 @@ async function main() {
         updated_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
     );
 
+    -- Категория меню
+    CREATE TABLE IF NOT EXISTS menu_categories (
+        id TEXT PRIMARY KEY,
+        venue_id TEXT NOT NULL REFERENCES venues(id) ON DELETE CASCADE,
+        name TEXT NOT NULL,
+        sort_order INTEGER NOT NULL DEFAULT 0,
+        created_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+        updated_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
+    );
+    CREATE INDEX IF NOT EXISTS menu_categories_venue_id_idx ON menu_categories(venue_id);
+
+    -- Позиция меню
+    CREATE TABLE IF NOT EXISTS menu_items (
+        id TEXT PRIMARY KEY,
+        venue_id TEXT NOT NULL REFERENCES venues(id) ON DELETE CASCADE,
+        category_id TEXT REFERENCES menu_categories(id) ON DELETE SET NULL,
+        name TEXT NOT NULL,
+        unit_price INTEGER NOT NULL,
+        is_active INTEGER NOT NULL DEFAULT 1,
+        created_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+        updated_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
+    );
+    CREATE INDEX IF NOT EXISTS menu_items_venue_id_idx ON menu_items(venue_id);
+    CREATE INDEX IF NOT EXISTS menu_items_category_id_idx ON menu_items(category_id);
+
     -- Столик
     CREATE TABLE IF NOT EXISTS tables (
         id TEXT PRIMARY KEY,

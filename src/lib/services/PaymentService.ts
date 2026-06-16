@@ -1,6 +1,6 @@
-import { eq, and, desc, sql } from 'drizzle-orm';
+import { eq, and, desc, sql, gte, lte } from 'drizzle-orm';
 import { db } from '../db';
-import { payments, paymentItems, type Payment, type NewPayment, type PaymentItem, type NewPaymentItem } from '../db/schema';
+import { payments, paymentItems, billItems, bills, type Payment, type NewPayment, type PaymentItem, type NewPaymentItem } from '../db/schema';
 import { z } from 'zod';
 
 // Валидация входных данных
@@ -31,6 +31,8 @@ const AddPaymentItemsSchema = z.array(z.object({
 type CreatePaymentInput = z.infer<typeof CreatePaymentSchema>;
 type UpdatePaymentInput = z.infer<typeof UpdatePaymentSchema>;
 type AddPaymentItemsInput = z.infer<typeof AddPaymentItemsSchema>;
+
+export type StatsPeriod = 'today' | 'week' | 'month' | { from: Date; to: Date };
 
 export function PaymentService() {
   return {
@@ -166,6 +168,98 @@ export function PaymentService() {
         .where(eq(payments.id, paymentId))
         .returning();
       return updated || null;
+    },
+
+    // ── Statistics ──
+
+    getPeriodRange(period: StatsPeriod): { from: Date; to: Date } {
+      const now = new Date();
+      if (typeof period === 'object') return period;
+      const from = new Date(now);
+      from.setHours(0, 0, 0, 0);
+      if (period === 'week') from.setDate(from.getDate() - 6);
+      if (period === 'month') from.setMonth(from.getMonth() - 1);
+      return { from, to: now };
+    },
+
+    async getStats(venueId: string, period: StatsPeriod = 'today'): Promise<{
+      totalRevenue: number;
+      totalTips: number;
+      paymentCount: number;
+      averageCheck: number;
+      guestCount: number;
+    }> {
+      const { from, to } = this.getPeriodRange(period);
+      const [result] = await db.select({
+        totalRevenue: sql<number>`coalesce(sum(${payments.totalAmount}), 0)`,
+        totalTips: sql<number>`coalesce(sum(${payments.tipAmount}), 0)`,
+        paymentCount: sql<number>`count(*)`,
+        guestCount: sql<number>`count(distinct ${payments.guestName})`,
+      }).from(payments)
+        .innerJoin(bills, eq(payments.billId, bills.id))
+        .where(and(
+          eq(bills.venueId, venueId),
+          eq(payments.status, 'succeeded'),
+          gte(payments.createdAt, from),
+          lte(payments.createdAt, to),
+        ));
+      return {
+        totalRevenue: result?.totalRevenue ?? 0,
+        totalTips: result?.totalTips ?? 0,
+        paymentCount: result?.paymentCount ?? 0,
+        averageCheck: result && result.paymentCount > 0
+          ? Math.round(result.totalRevenue / result.paymentCount)
+          : 0,
+        guestCount: result?.guestCount ?? 0,
+      };
+    },
+
+    async getPaymentMethodBreakdown(venueId: string, period: StatsPeriod = 'today'): Promise<{
+      method: string | null;
+      count: number;
+      total: number;
+    }[]> {
+      const { from, to } = this.getPeriodRange(period);
+      return db.select({
+        method: payments.paymentMethod,
+        count: sql<number>`count(*)`,
+        total: sql<number>`coalesce(sum(${payments.totalAmount}), 0)`,
+      }).from(payments)
+        .innerJoin(bills, eq(payments.billId, bills.id))
+        .where(and(
+          eq(bills.venueId, venueId),
+          eq(payments.status, 'succeeded'),
+          gte(payments.createdAt, from),
+          lte(payments.createdAt, to),
+        ))
+        .groupBy(payments.paymentMethod);
+    },
+
+    async getTopItems(venueId: string, period: StatsPeriod = 'today', limit = 10): Promise<{
+      name: string;
+      orderCount: number;
+      totalQuantity: number;
+      revenue: number;
+    }[]> {
+      const { from, to } = this.getPeriodRange(period);
+      return db.select({
+        name: billItems.name,
+        orderCount: sql<number>`count(distinct ${billItems.billId})`,
+        totalQuantity: sql<number>`sum(${billItems.quantity})`,
+        revenue: sql<number>`sum(${billItems.unitPrice} * ${billItems.quantity})`,
+      }).from(billItems)
+        .innerJoin(payments, eq(billItems.paymentId, payments.id))
+        .innerJoin(bills, eq(payments.billId, bills.id))
+        .where(and(
+          eq(bills.venueId, venueId),
+          eq(payments.status, 'succeeded'),
+          eq(billItems.status, 'paid'),
+          gte(payments.createdAt, from),
+          lte(payments.createdAt, to),
+        ))
+        .groupBy(billItems.name)
+        .orderBy(desc(sql<number>`sum(${billItems.unitPrice} * ${billItems.quantity})`))
+        .limit(limit);
     },
   };
 }

@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PaymentService } from '@/lib/services/PaymentService';
 import { BillService } from '@/lib/services/BillService';
+import { TableService } from '@/lib/services/TableService';
 import { IntegrationService } from '@/lib/services/IntegrationService';
 import { createPOSAdapter } from '@/lib/integrations/POSAdapter';
+import { notifyPaymentSucceeded, notifyBillClosed } from '@/lib/telegram-bot/notifications';
 import { z } from 'zod';
 
 const paymentService = PaymentService();
@@ -104,6 +106,19 @@ export async function POST(request: NextRequest) {
         })),
       },
     });
+
+    // Уведомление администратора
+    const tableService = TableService();
+    const table = await tableService.getById(bill.tableId);
+    const tableLabel = table?.label || bill.tableId;
+
+    await notifyPaymentSucceeded(bill.id, payment.id, tableLabel, totalAmount, validated.guestName);
+
+    // Если все позиции оплачены — уведомляем о закрытии счёта
+    const remainingUnpaid = await billService.listItems(bill.id, 'unpaid');
+    if (remainingUnpaid.length === 0) {
+      await notifyBillClosed(bill.id, tableLabel, totalAmount);
+    }
 
     return NextResponse.json(payment, { status: 201 });
   } catch (error) {

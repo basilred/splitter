@@ -25,6 +25,33 @@ export const integrationEventTypeEnum = [
 ] as const;
 export const userRoleEnum = ['owner', 'manager', 'staff'] as const;
 
+// Категория меню
+export const menuCategories = sqliteTable('menu_categories', {
+  id: text('id').primaryKey(),
+  venueId: text('venue_id').notNull().references(() => venues.id, { onDelete: 'cascade' }),
+  name: text('name').notNull(),
+  sortOrder: integer('sort_order').notNull().default(0),
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(sql`(strftime('%s', 'now'))`),
+  updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull().default(sql`(strftime('%s', 'now'))`),
+}, (table) => [
+  index('menu_categories_venue_id_idx').on(table.venueId),
+]);
+
+// Позиция меню
+export const menuItems = sqliteTable('menu_items', {
+  id: text('id').primaryKey(),
+  venueId: text('venue_id').notNull().references(() => venues.id, { onDelete: 'cascade' }),
+  categoryId: text('category_id').references(() => menuCategories.id, { onDelete: 'set null' }),
+  name: text('name').notNull(),
+  unitPrice: integer('unit_price').notNull(), // в копейках
+  isActive: integer('is_active', { mode: 'boolean' }).notNull().default(true),
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(sql`(strftime('%s', 'now'))`),
+  updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull().default(sql`(strftime('%s', 'now'))`),
+}, (table) => [
+  index('menu_items_venue_id_idx').on(table.venueId),
+  index('menu_items_category_id_idx').on(table.categoryId),
+]);
+
 // Заведение
 export const venues = sqliteTable('venues', {
   id: text('id').primaryKey(),
@@ -171,5 +198,9 @@ export type IntegrationEvent = typeof integrationEvents.$inferSelect;
 export type NewIntegrationEvent = typeof integrationEvents.$inferInsert;
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
+export type MenuCategory = typeof menuCategories.$inferSelect;
+export type NewMenuCategory = typeof menuCategories.$inferInsert;
+export type MenuItem = typeof menuItems.$inferSelect;
+export type NewMenuItem = typeof menuItems.$inferInsert;
 export type Session = typeof sessions.$inferSelect;
 export type NewSession = typeof sessions.$inferInsert;
